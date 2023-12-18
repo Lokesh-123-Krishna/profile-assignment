@@ -1,0 +1,45 @@
+/** user edit form styles*/
+
+.user-container {
+    padding-top: 20px;
+}
+
+.user-details {
+    background-color: #fff;
+    padding: 2.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+label {
+    text-align: left;
+}
+
+.user-row {
+    margin-bottom: 1.5rem;
+}
+
+.user-col-details {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.user-col-name {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+.user-details input,
+textarea {
+    margin-top: 5px;
+    width: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+    background: #ffffff;
+    border-radius: 3px;
+    border: 1px solid lightgray;
+}
