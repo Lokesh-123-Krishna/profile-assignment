@@ -4,24 +4,40 @@ import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../actions/AuthActions";
 import { useNavigate } from "react-router-dom";
-import logo from '../logo.svg'
+import logo from '../logo.svg';
 
 const TEST_SITE_KEY = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI";
+
 export const Login = () => {
-    const captchaRef = useRef()
+    const captchaRef = useRef();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [auth, setAuth] = useState(null);
     const dispatch = useDispatch();
-    const [auth, setAuth] = useState(null)
-    const history = useNavigate()
+    const history = useNavigate();
 
     const handleChange = value => {
-        setAuth(value)
+        setAuth(value);
     };
 
-    const asyncScriptOnLoad = () => { };
+    const asyncScriptOnLoad = () => {};
 
-    // validate login form
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+    
+        if (!validateForm()) return;
+    
+        // Dispatch action to validate user
+        const isValidUser = validateUser(email, password);
+    
+        if (isValidUser) {
+          dispatch(loginSuccess({ email, password }));
+          history('/user-details', { state: email });
+        } else {
+          alert('Invalid username or password');
+        }
+      };
+
     const validateForm = () => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
@@ -35,21 +51,19 @@ export const Login = () => {
         }
 
         return true;
-    }
-
-    const handleSubmit = (event) => {
-        const userData = {
-            email,
-            password,
-            auth
-        };
-
-        if (validateForm()) {
-            dispatch(loginSuccess(userData));
-            history('/user-details', { state: email })
-        }
     };
 
+    const validateUser = (enteredEmail, enteredPassword) => {
+        // Simulate user validation using the entered email and password
+        const validUsers = [
+          { email: "user1@gmail.com", password: "user1@gmail.com" },
+          { email: "user2@gmail.com", password: "user2@gmail.com" },
+        ];
+    
+        return validUsers.some(
+          (user) => user.email === enteredEmail && user.password === enteredPassword
+        );
+      };
     return (<div className="login-container">
         <span>Login with</span>
         <div className="social-login">
@@ -73,7 +87,8 @@ export const Login = () => {
                     value={email} placeholder='Email'
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                />            </div>
+                />            
+                </div>
             <div className="input-group">
                 <input
                     type="password"

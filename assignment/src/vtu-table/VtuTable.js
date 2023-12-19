@@ -1,4 +1,8 @@
 import './vtu-table.css';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from '../actions/AuthActions';
+
 const jsonData = [
   [
     [
@@ -68,6 +72,13 @@ const jsonData = [
 ];
 
 export const VtuTable = () => {
+  const history = useNavigate()
+  const dispatch = useDispatch()
+
+  const handleLogout = () => [
+    dispatch(logout()),
+    history('/')
+  ]
   return (
     <div>
       <div>
@@ -146,6 +157,9 @@ export const VtuTable = () => {
           </table>
         </div>
       </div>
+        <div className="input-group" style={{paddingTop: '35px'}}>
+           <button type="button" onClick={()=>{handleLogout()}}>Log Out</button>
+        </div>
     </div>
   )
 }

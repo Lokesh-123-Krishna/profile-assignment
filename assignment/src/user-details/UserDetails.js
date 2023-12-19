@@ -4,8 +4,7 @@ import './UserDetails.css'
 import { VtuTable } from "../vtu-table/VtuTable";
 
 export const UserDetails = () => {
-    const user = useSelector((state) => state.auth.user);
-
+    const user = useSelector((state) => state.auth.loggedInUser);
     const [formData, setFormData] = useState({
         companyName: '',
         userName: '',
@@ -30,7 +29,15 @@ export const UserDetails = () => {
 
     // Handle form submission
     const handleSubmit = (e) => {
+        e.preventDefault();
         console.log('Form submitted:', formData);
+
+        // Display the updated details in an alert
+        const updatedDetails = {
+            ...formData,
+            email: user?.email // Ensure the user email is up to date
+        };
+        alert(`Updated Details: ${JSON.stringify(updatedDetails, null, 2)}`);
     };
 
     return (
@@ -46,7 +53,7 @@ export const UserDetails = () => {
                                 id="companyName"
                                 name="companyName"
                                 value={formData.companyName}
-                                onChange={handleChange} disabled
+                                onChange={handleChange} 
                             />
                         </div>
                         <div>
@@ -67,6 +74,7 @@ export const UserDetails = () => {
                                 name="email"
                                 value={formData.email}
                                 onChange={handleChange}
+                                disabled
                             />
                         </div>
                     </div>
